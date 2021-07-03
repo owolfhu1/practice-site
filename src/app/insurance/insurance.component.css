@@ -1,0 +1,17 @@
+.right {
+  text-align: right;
+}
+
+.blue {
+  color: blue;
+}
+
+::ng-deep.mat-button-toggle-checked {
+  background: #4051b5;
+}
+
+.biggest {
+  font-size: 50px;
+}
+
+

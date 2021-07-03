@@ -1,0 +1,51 @@
+<br><br>
+
+<h1>Selenium</h1>
+
+<div class="list">
+  <mat-card
+    matRipple
+    class="mat-elevation-z12"
+    *ngFor="let item of seleniumItems"
+    (click)="goto([item.path])"
+  >
+    <br><br>
+    <p><mat-icon class="logo">{{ item.icon }}</mat-icon></p>
+    <br>
+    <h2>{{ item.name }}</h2>
+  </mat-card>
+</div>
+
+<h1>Projects</h1>
+
+<div class="list">
+  <mat-card
+    matRipple
+    class="mat-elevation-z12"
+    *ngFor="let item of projectItems"
+    (click)="goto([item.path])"
+  >
+    <br><br>
+    <p><mat-icon class="logo">{{ item.icon }}</mat-icon></p>
+    <br>
+    <h2>{{ item.name }}</h2>
+  </mat-card>
+</div>
+
+<div class="trial" *ngIf="showTrial">
+  <h1>Free Trial Classes</h1>
+  <p>
+    Not sure if we are a good match for you
+    or which class you want to learn?<br>
+    Free trial classes are available and may
+    be taken once per class.<br>
+    For more information get in touch.
+  </p>
+  <button mat-raised-button color="primary" [routerLink]="['/under-construction/application']">
+    APPLY NOW
+  </button>
+
+  <button mat-icon-button class="close" (click)="showTrial = false">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

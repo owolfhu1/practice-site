@@ -1,0 +1,42 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h1 {
+  margin-left: 20px;
+}
+
+mat-card {
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 20px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.logo {
+  transform: scale(3);
+}
+
+.trial {
+  background-color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  padding: 20px;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
