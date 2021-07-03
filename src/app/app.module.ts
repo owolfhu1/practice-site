@@ -55,3 +55,6 @@ import { ErrorComponent } from './error/error.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+// pages deploy: ng build --output-path docs --base-href /practice-site/
