@@ -243,7 +243,7 @@
         mat-raised-button
         color="primary"
         [disabled]="!otherLic"
-        (click)="submitted = true"
+        (click)="submit()"
       >Submit</button>
     </div>
   </mat-step>
@@ -253,9 +253,9 @@
   <br><br>
   <h3>Reviewer, here's a detailed summary of your quote:</h3>
 
-  <h1><span class="biggest">$153.67</span> per month</h1>
+  <h1><span class="biggest">${{insuranceCost}}</span> per month</h1>
 
-  <p>$1,844.00 per year | Taxes not included | Quote #D000034953075</p>
+  <p>${{insuranceCostX12}} per year | Taxes not included | Quote #D000034953075</p>
   <p>You saved money on your premium.</p>
   <br>
 

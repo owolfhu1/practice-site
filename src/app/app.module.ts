@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { InsuranceComponent } from './insurance/insurance.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -22,6 +22,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMenuModule } from '@angular/material/menu';
 import { FuturePageComponent } from './future-page/future-page.component';
 import { ErrorComponent } from './error/error.component';
+import { DialogExampleDialogComponent, ElementsComponent } from './elements/elements.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { SafePipe } from './elements/safe.pipe';
+import { MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -29,7 +37,10 @@ import { ErrorComponent } from './error/error.component';
     HomeComponent,
     InsuranceComponent,
     FuturePageComponent,
-    ErrorComponent
+    ErrorComponent,
+    ElementsComponent,
+    SafePipe,
+    DialogExampleDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,11 +61,20 @@ import { ErrorComponent } from './error/error.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatMenuModule,
+    MatTabsModule,
+    MatTooltipModule,
+    NgxSliderModule,
+    MatTableModule,
+    MatExpansionModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ],
+  entryComponents: [ DialogExampleDialogComponent ],
 })
 export class AppModule { }
 
 
-// pages deploy: ng build --output-path docs --base-href /practice-site/
+// pages deploy command: ng build --output-path docs --base-href /practice-site/
+// deploy URL: https://owolfhu1.github.io/practice-site

@@ -9,8 +9,8 @@ import {Router} from '@angular/router';
 export class HomeComponent implements OnInit {
   showTrial = true;
   seleniumItems = [
-    { name: 'Elements', icon: 'dashboard', path: 'under-construction/elements' },
-    { name: 'Testing', icon: 'task_alt', path: 'under-construction/testing' },
+    { name: 'Elements', icon: 'dashboard', path: 'selenium/elements' },
+    { name: 'TestNG', icon: 'task_alt', path: 'under-construction/testing' },
     { name: 'Cucumber', icon: 'miscellaneous_services', path: 'under-construction/cucumber' },
   ];
   projectItems = [

@@ -1,0 +1,422 @@
+<br><br>
+
+<div *ngIf="!selected">
+  <div *ngFor="let numeral of ['I', 'II', 'III', 'IV']">
+    <h1>Elements part {{ numeral }}</h1>
+
+    <div class="list">
+      <mat-card
+        matRipple
+        class="tile mat-elevation-z12"
+        (click)="selected = section; "
+        *ngFor="let section of sections[numeral]">
+        <h4>{{ section }}</h4>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selected">
+  <div class="header">
+    <h1><span class="link" (click)="selected = null">Elements Home</span> > {{ selected }}</h1>
+    <h3 class="paginator">
+      <span *ngIf="previous" class="link" [matTooltip]="previous" (click)="selected = previous"><mat-icon class="pag">arrow_left</mat-icon> previous</span>
+      <span *ngIf="!previous" class="gray"><mat-icon class="pag">arrow_left</mat-icon> previous</span>
+      |
+      <span *ngIf="next" class="link" [matTooltip]="next" (click)="selected = next">next <mat-icon class="pag">arrow_right</mat-icon></span>
+      <span *ngIf="!next" class="gray">next <mat-icon class="pag">arrow_right</mat-icon></span>
+    </h3>
+
+  </div>
+
+  <!-- Tabs -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Tabs'">
+    <h2>Sample Tabs</h2>
+    <hr>
+    <mat-tab-group>
+      <mat-tab label="Phasellus"><p>
+        Phasellus placerat ipsum eget pulvinar posuere. Nullam nec viverra dui. Mauris sem nisl, lobortis nec augue in,
+        vehicula tincidunt sem. Donec feugiat iaculis massa, non sollicitudin mauris commodo in. Aenean eu scelerisque
+        ipsum. Fusce vulputate rutrum molestie. Etiam fringilla elit eu quam tempor, nec porta libero congue.
+        Pellentesque eu feugiat ipsum. Donec non ullamcorper nisl, a facilisis eros. Sed iaculis ante et eros ultricies
+        ullamcorper. Donec sagittis luctus placerat. Pellentesque accumsan massa tortor, vel iaculis nibh congue ut.
+        Pellentesque convallis, mauris quis viverra gravida, mi est tempus tellus, et fermentum ex est ut eros.
+        Donec dictum sodales fermentum.
+      </p></mat-tab>
+      <mat-tab label="Nulla"><p>
+        Nulla id sollicitudin sem. Sed faucibus ligula quis nibh iaculis aliquam. Sed ut placerat ante. Praesent
+        ullamcorper a justo id ultricies. Nulla auctor, elit sit amet vulputate hendrerit, felis tortor semper nisi,
+        vitae porta nisl ex vel enim. In ultrices gravida eros, ac imperdiet orci elementum a. Integer eget quam nisl.
+      </p></mat-tab>
+      <mat-tab label="Sed"><p>
+        Sed faucibus ante nibh, at maximus dui facilisis nec. Curabitur mollis, metus in ultrices finibus, odio ligula
+        ornare massa, non sodales urna nisl sit amet massa. Nam ac lectus sed dui pellentesque aliquet a in tellus.
+        Phasellus vel nisl eget enim ullamcorper suscipit. Vestibulum id tincidunt tortor. In nec nisl laoreet purus
+        hendrerit aliquam. Cras id placerat orci. In leo sem, porttitor vel sem at, tincidunt porttitor purus. Nullam
+        leo felis, sollicitudin at libero vel, sollicitudin elementum libero. Aenean odio est, tristique tempus leo vel,
+        pretium venenatis nibh. Nulla laoreet lobortis erat, sed sagittis ligula feugiat et. Vestibulum a dolor vitae
+        erat pulvinar volutpat. Maecenas lacinia tincidunt tortor.
+      </p></mat-tab>
+      <mat-tab label="Cras"><p>
+        Cras tincidunt ac augue ac consectetur. Mauris at tellus in nunc elementum dictum nec eget diam. Orci varius
+        natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum fringilla hendrerit nisi,
+        ut molestie ligula pellentesque ac. Integer pulvinar arcu vitae convallis sodales. Vestibulum vel est eu justo
+        tristique placerat eget aliquet lorem. Nunc fringilla magna et arcu luctus aliquet. Proin laoreet sapien sed
+        vestibulum laoreet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempus nunc a libero
+        sagittis, quis efficitur orci elementum. Nulla vestibulum augue ac justo pellentesque condimentum. Suspendisse
+        elementum quam a nunc tristique convallis. Mauris faucibus varius semper. Suspendisse porttitor tristique enim
+        ut aliquam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec
+        non congue velit.
+      </p></mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+  <!-- Slider -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Slider'">
+    <h2>Simple Slider</h2>
+    <hr>
+
+    <ngx-slider #r value="0" [options]="colorSliderOptions"></ngx-slider>
+    <ngx-slider #g value="0" [options]="colorSliderOptions"></ngx-slider>
+    <ngx-slider #b value="0" [options]="colorSliderOptions"></ngx-slider>
+
+    <br><br>
+
+    <div class="header">
+      <h4>Color: {{ getColor(r.value, g.value, b.value) }}</h4>
+      <mat-card class="color-box mat-elevation-z12" [style]="getColorBlockStyle(getColor(r.value, g.value, b.value))"></mat-card>
+    </div>
+  </mat-card>
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Slider'">
+    <h2>Range</h2>
+    <hr>
+
+    <h4>Price: ${{rangeSlider.value}}.00 - ${{rangeSlider.highValue}}.00</h4>
+
+    <ngx-slider #rangeSlider value="0" highValue="100" [options]="rangeSliderOptions"></ngx-slider>
+    <br>
+  </mat-card>
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Slider'">
+    <h2>Increments</h2>
+    <hr>
+
+    <h4>Increment: ${{incrementSlider.value}}</h4>
+
+    <ngx-slider #incrementSlider value="0" [options]="tickSliderOptions"></ngx-slider>
+    <br>
+  </mat-card>
+
+  <!-- Text Box -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Text Box'">
+    <h2>Text Boxes</h2>
+    <hr>
+
+    <div style="display: flex;">
+      <h4 class="label">First Name:</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matNativeControl>
+      </mat-form-field>
+      <mat-card class="hint mat-elevation-z4" *ngIf="showTextBoxHint"><h4>
+        Please provide your first name.
+      </h4></mat-card>
+    </div>
+
+    <div style="display: flex;">
+      <h4 class="label">Last Name:</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matNativeControl>
+      </mat-form-field>
+      <mat-card class="hint mat-elevation-z4" *ngIf="showTextBoxHint"><h4>
+        Please provide your last name.
+      </h4></mat-card>
+    </div>
+
+    <div style="display: flex;">
+      <h4 class="label">Address:</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <input matNativeControl>
+      </mat-form-field>
+      <mat-card class="hint mat-elevation-z4" *ngIf="showTextBoxHint"><h4>
+        Your home or work address.
+      </h4></mat-card>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="showTextBoxHint = !showTextBoxHint">Show Help</button>
+  </mat-card>
+
+  <!-- Alert Box -->
+
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Alert Box'">
+    <h2>Alerts</h2>
+    <hr>
+
+    <div>
+      <h4 class="alert-label">Click button to see alert</h4>
+      <button mat-raised-button (click)="alertDemo()" color="primary">Click me</button>
+    </div>
+
+    <div>
+      <h4 class="alert-label">On button click, alert will appear after 5 seconds</h4>
+      <button mat-raised-button (click)="alertTimedDemo()" color="primary">Click me</button>
+    </div>
+
+    <div>
+      <h4 class="alert-label">On button click, confirm box will appear</h4>
+      <button mat-raised-button (click)="confirmDemo()" color="primary">Click me</button>
+    </div>
+
+    <div>
+      <h4 class="alert-label">On button click, prompt box will appear</h4>
+      <button mat-raised-button (click)="promptDemo()" color="primary">Click me</button>
+    </div>
+  </mat-card>
+
+  <!-- Dialog Box -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Dialog Box'">
+    <h2>Dialog Boxes</h2>
+    <hr>
+
+    <h4>Existing Users:</h4>
+
+    <div *ngIf="!dialogTableData.length" style="text-align: center" class="mat-elevation-z4">
+      <br>
+      <h4>No users created, click the button below to create a new user</h4>
+      <br>
+    </div>
+
+    <table #dialogTable *ngIf="dialogTableData.length" mat-table [dataSource]="dialogTableData" class="mat-elevation-z4 full">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pass">
+        <th mat-header-cell *matHeaderCellDef> Password </th>
+        <td mat-cell *matCellDef="let element"> {{element.pass}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="trash">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <button mat-icon-button color="warn" (click)="deleteDialogUser(i)"><mat-icon>delete</mat-icon></button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="dialogTableColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: dialogTableColumns;"></tr>
+    </table>
+
+    <p>
+      <button mat-raised-button color="primary" (click)="openDialogExample()">Create a New User</button>
+    </p>
+
+    <h4>
+      Use a modal dialog to require that the user enter data during a multi-step process.
+      Embed form markup in the context area, set the model option to true and specify
+      primary and secondary user actions with the buttons option
+    </h4>
+  </mat-card>
+
+  <!-- Progress Bar -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Progress Bar'"><h2>{{ selected }} element to come</h2></mat-card>
+
+  <!-- Frames -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Frames'">
+    <h2>IFrame</h2>
+    <hr>
+
+    <h4>Below is an iframe, if you want to perform any operation in this window you will need to enter in this iframe.</h4>
+
+    <iframe width="1000" height="400" src="projects/insurance" frameborder="5"></iframe>
+
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+  </mat-card>
+
+  <!-- Windows -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Windows'">
+    <h2>Open New Window</h2>
+    <hr>
+
+    <h4>Click below button to open a new window now.</h4>
+
+    <p>
+      <button mat-raised-button color="primary" (click)="openWindow()">Click Me</button>
+    </p>
+  </mat-card>
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Windows'">
+    <h2>Open New Tab</h2>
+    <hr>
+
+    <h4>Click below button to open a new tab now.</h4>
+
+    <p>
+      <button mat-raised-button color="primary" (click)="openTab()">Click Me</button>
+    </p>
+  </mat-card>
+
+  <!-- Accordion -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Accordion'">
+    <h2>Simple Accordion</h2>
+    <hr>
+
+
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h4>Aliquam</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+            Aliquam non eros non nisl
+            <mat-icon>support_agent</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h4>
+          Aliquam non eros non nisl aliquam congue quis eu nisl. Morbi dignissim urna dolor, nec porta felis congue ut. Donec laoreet, neque vel accumsan dignissim, velit leo varius diam, suscipit sollicitudin lorem est quis diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nunc vulputate lorem ut arcu dictum pretium in at justo. Nunc a malesuada risus. Etiam suscipit hendrerit urna sit amet convallis. Vivamus eget elit quis magna blandit imperdiet sodales ut ante. Duis ornare vestibulum est, a vestibulum risus convallis nec. Fusce a tortor mi.
+        </h4>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h4>Donec</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+            Donec arcu tortor
+            <mat-icon>hot_tub</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h4>
+          Donec arcu tortor, rhoncus id interdum in, rhoncus in lectus. Fusce a lobortis sapien. Vestibulum tortor elit, dignissim vitae convallis vitae, scelerisque sed diam. Duis id ultrices odio, nec elementum lectus. In sit amet lorem vehicula, sodales lectus eget, volutpat nunc. In hac habitasse platea dictumst. Ut convallis sodales velit, molestie mattis massa ultricies varius. Quisque id rhoncus turpis. Aliquam nunc enim, ornare eu ultricies at, placerat ut eros. Maecenas blandit velit ac dictum fringilla. Duis ac erat lorem. Integer eros elit, scelerisque nec suscipit ut, semper ut est. Suspendisse hendrerit justo et consectetur blandit. Duis scelerisque vehicula odio a consequat. Pellentesque sed nulla et mauris imperdiet porttitor nec eget quam.
+        </h4>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h4>Vivamus</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+            Vivamus faucibus tincidunt magna id
+            <mat-icon>electric_bike</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h4>
+          Vivamus faucibus tincidunt magna id tincidunt. Donec blandit nibh ac lacus pharetra sagittis eu vitae eros. Donec viverra sodales est, non ornare velit. Aliquam erat volutpat. Praesent vitae nibh eget orci dignissim scelerisque a ac nisl. Pellentesque auctor ex massa. Nam ligula metus, ornare sit amet egestas eu, accumsan in mi. Praesent hendrerit dolor erat, vitae imperdiet massa congue non. Donec leo libero, rhoncus nec tortor id, blandit porta lacus. Cras eget euismod nisl. Quisque eget risus mauris. Praesent fringilla hendrerit est porttitor ultricies.
+        </h4>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h4>Vestibulum</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+            Vestibulum a pretium ex
+            <mat-icon>golf_course</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <h4>
+          Vestibulum a pretium ex, mollis molestie lorem. Nam gravida scelerisque lectus vel sodales. Phasellus odio eros, auctor eu feugiat at, egestas quis lectus. Donec nec purus ante. Mauris molestie lacus eu diam dapibus suscipit. Nam eu odio dictum, sollicitudin nisl et, congue mauris. Aliquam erat volutpat. Duis efficitur est sit amet libero porta, sit amet laoreet dui consequat. Aliquam varius nulla viverra maximus convallis.
+        </h4>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </mat-card>
+
+  <!-- Dropdown -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Dropdown'">
+    <h2>Dropdown Example</h2>
+    <hr>
+
+    <h4>Select country from below dropdown list.</h4>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a country</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let option of dropdownOptions" [value]="option">{{ option }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card>
+
+  <!-- Autocomplete -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Autocomplete'">
+    <h2>Autocomplete Example I</h2>
+    <hr>
+
+    <div style="display: flex">
+      <h4>Search: </h4>
+      &nbsp;
+      <mat-form-field appearance="outline">
+        <mat-label>Names</mat-label>
+        <input type="text"
+               matInput
+               [formControl]="autoCompleteControlOne"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of autoCompleteOneFilteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <h4>A categorized search result. Try typing "a" or "n".</h4>
+  </mat-card>
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Autocomplete'">
+    <h2>Autocomplete Example II</h2>
+    <hr>
+
+    <h4>Your preferred programming language:</h4>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Programing Languages</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="autoCompleteControlTwo"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of autoCompleteTwoFilteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </mat-card>
+
+  <!-- Select Element -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Select Element'"><h2>{{ selected }} element to come</h2></mat-card>
+
+  <!-- Sorting -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Sorting'"><h2>{{ selected }} element to come</h2></mat-card>
+
+  <!-- Spinner -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Spinner'"><h2>{{ selected }} element to come</h2></mat-card>
+
+  <!-- Toolbar -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Toolbar'"><h2>{{ selected }} element to come</h2></mat-card>
+
+  <!-- Date Picker -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Date Picker'"><h2>{{ selected }} element to come</h2></mat-card>
+
+  <!-- Drag and Drop -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Drag and Drop'"><h2>{{ selected }} element to come</h2></mat-card>
+
+  <!-- Draggable Box -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'Draggable Box'"><h2>{{ selected }} element to come</h2></mat-card>
+
+  <!-- AngularJS Sites -->
+  <mat-card class="section mat-elevation-z4" *ngIf="selected === 'AngularJS Sites'"><h2>{{ selected }} element to come</h2></mat-card>
+
+</div>
+

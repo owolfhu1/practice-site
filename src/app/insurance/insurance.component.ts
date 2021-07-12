@@ -21,6 +21,7 @@ export class InsuranceComponent implements OnInit {
   savingsProgram;
   licNumber;
   otherLic;
+  randomCost;
 
   get years() {
     return Object.keys(this.carData);
@@ -34,10 +35,33 @@ export class InsuranceComponent implements OnInit {
     return this.carData[this.year][this.make];
   }
 
+  get insuranceCost() {
+    let temp = this.randomCost + '';
+    temp = temp.substring(0, temp.indexOf('.') + 3);
+    return temp;
+  }
+
+  get insuranceCostX12() {
+    let temp: any = this.randomCost + '';
+    temp = temp.substring(0, temp.indexOf('.') + 3) * 1 * 12 + '';
+    temp = temp.substring(0, temp.indexOf('.') + 3);
+    if (temp.length > 6) {
+      temp = temp.split('');
+      temp.splice(1, 0, ',');
+      temp = temp.join('');
+    }
+    return temp;
+  }
+
   constructor() { }
 
   ngOnInit(): void {
     this.getData();
+  }
+
+  submit() {
+    this.submitted = true;
+    this.randomCost = Math.random() * 500;
   }
 
   async getData() {
