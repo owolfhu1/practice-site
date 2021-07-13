@@ -130,3 +130,16 @@ iframe {
   justify-content: space-between;
   align-items: center;
 }
+
+.resizeable {
+  resize: both;
+  border: #4051b5 solid 2px;
+  display: block;
+  overflow: auto;
+  border-radius: 5px;
+  height: 300px;
+}
+
+.resizeable::-webkit-scrollbar {
+  display: block;
+}
