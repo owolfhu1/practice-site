@@ -27,12 +27,9 @@ mat-card:hover {
 .trial {
   background-color: rgba(0, 0, 0, 0.7);
   text-align: center;
-  padding: 20px;
+  padding: 20px 20px 40px;
+  margin: 40px -40px -40px;
   color: white;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
 }
 
 .close {

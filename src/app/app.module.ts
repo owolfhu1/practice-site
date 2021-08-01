@@ -30,6 +30,9 @@ import { SafePipe } from './elements/safe.pipe';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AddFinanceDialogComponent, MoneyManagementComponent } from './money-management/money-management.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ElementsComponent,
     SafePipe,
     DialogExampleDialogComponent,
+    MoneyManagementComponent,
+    AddFinanceDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -66,12 +71,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     NgxSliderModule,
     MatTableModule,
     MatExpansionModule,
+    MatRadioModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [ AppComponent ],
-  entryComponents: [ DialogExampleDialogComponent ],
+  entryComponents: [ DialogExampleDialogComponent, AddFinanceDialogComponent ],
 })
 export class AppModule { }
 

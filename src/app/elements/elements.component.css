@@ -110,11 +110,12 @@ mat-slider {
 }
 
 iframe {
-  transform: scale(.78);
+  transform: scale(.80);
   position: absolute;
-  right: -95px;
-  top: 60px;
-  border: black solid 3px;
+  right: -83px;
+  top: 73px;
+  border: grey solid 3px;
+  border-radius: 6px;
 }
 
 .full {

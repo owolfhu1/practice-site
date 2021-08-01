@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   ];
   projectItems = [
     { name: 'Insurance', icon: 'local_police', path: 'projects/insurance' },
-    { name: 'Banking', icon: 'account_balance', path: 'under-construction/banking' },
+    { name: 'Money Management', icon: 'account_balance', path: 'projects/money-management' },
   ];
 
   constructor(private router: Router) {}

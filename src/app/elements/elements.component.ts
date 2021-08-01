@@ -4,7 +4,12 @@ import { MatTable } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { AutocompleteNames, AutocompleteLanguages, DropdownCountries } from './variables';
+import {
+  AutocompleteNames,
+  AutocompleteLanguages,
+  DropdownCountries,
+  LoremIpsumArray
+} from './variables';
 
 
 const pad = num => {
@@ -21,6 +26,7 @@ const pad = num => {
 })
 export class ElementsComponent {
   @ViewChild('dialogTable') dialogTable: MatTable<any>;
+  loremIpsumArray = LoremIpsumArray;
   sections = {
     I : [ 'Tabs', 'Slider', 'Text Box', 'Alert Box', 'Dialog Box', 'Progress Bar' ],
     II : [ 'Frames', 'Windows', 'Accordion', 'Dropdown', 'Autocomplete', 'Select Element' ],

@@ -1,0 +1,822 @@
+<br><br>
+
+<div *ngIf="step === 'pre'">
+  <h1>Goals we recommend</h1>
+
+  <mat-card class="mat-elevation-z4">
+    <h2>Interested in some help prioritizing your goals?</h2>
+    <h4 class="short">
+      Would you like some guidance on what goals to prioritize based
+      on your own personal situation? We can help recommend some
+      goals for you. Just click 'Start' to begin.
+    </h4>
+    <div class="right">
+      <button mat-raised-button color="primary" (click)="step = 'description'">Start</button>
+    </div>
+  </mat-card>
+</div>
+
+<div *ngIf="step === 'description'">
+  <h1>Your recommended goals</h1>
+
+  <h2 class="short">Think of it as a smart financial plan - tailored just for you, from now to retirement.</h2>
+
+  <div class="flex">
+    <mat-card class="tile description-tile mat-elevation-z4">
+      <mat-icon class="description-icon">quiz</mat-icon>
+      <h5 class="trim">
+        We'll start by getting some info from you to understand where you are in you financial journey.
+      </h5>
+    </mat-card>
+    <mat-card class="tile description-tile mat-elevation-z4">
+      <mat-icon class="description-icon">format_list_numbered</mat-icon>
+      <h5 class="trim">Next we'll offer some recommendations to help you get where you want to be.</h5>
+    </mat-card>
+    <mat-card class="tile description-tile mat-elevation-z4">
+      <mat-icon class="description-icon">done_all</mat-icon>
+      <h5 class="trim">With your plan in place, we'll help you track how you're progressing along the way.</h5>
+    </mat-card>
+  </div>
+
+  <br><br>
+
+  <mat-card class="tile info-tile mat-elevation-z4">
+    <mat-icon class="time-icon">schedule</mat-icon>
+    <h5 class="trim">This should take around 10 minutes to complete. You can always revisit it later.</h5>
+  </mat-card>
+
+  <br>
+
+  <p class="medium">
+    <b>Please note:</b> Our recommendations are based on the information you've
+    provided in your Financial Profile. This information is intended as guidance
+    only and should not be considered financial advice or as a formal financial plan.
+  </p>
+
+  <div class="right">
+    <button mat-raised-button color="primary" (click)="step = 'activity'">Set up now</button>
+  </div>
+</div>
+
+<div *ngIf="step === 'activity'">
+  <mat-horizontal-stepper #stepper>
+    <mat-step>
+      <ng-template matStepLabel><h5>Getting started</h5></ng-template>
+
+      <h2>Let's get started</h2>
+      <h4 class="medium">
+        To recommend goals for you, we'll start by asking you for some
+        information so we can understand where you are in your financial journey.
+      </h4>
+
+      <h4 class="l">What's your marital status?</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Marital Status</mat-label>
+        <mat-select [(value)]="maritalStatus">
+          <mat-option value="married">Married</mat-option>
+          <mat-option value="divorced">Divorced</mat-option>
+          <mat-option value="single">Single</mat-option>
+          <mat-option value="widow">Widow</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h4 class="l">
+        Are you saving or planning to save for a child's post-secondary education?
+      </h4>
+      <mat-radio-group [(ngModel)]="childEducation">
+        <mat-radio-button [value]="true">Yes</mat-radio-button>&nbsp;
+        <mat-radio-button [value]="false">No</mat-radio-button>
+      </mat-radio-group>
+
+      <h4 *ngIf="childEducation" class="l">
+        How many children
+      </h4>
+      <mat-form-field *ngIf="childEducation" appearance="outline">
+        <mat-label>Children</mat-label>
+        <input matNativeControl type="number" [(ngModel)]="numberOfChildren">
+      </mat-form-field>
+
+      <h2>Assign and prioritize your goals</h2>
+
+      <h4 class="short">
+        To help us better understand your needs, please identify your financial goals below.
+        Rank them from the most important at the top to the least important at the bottom.
+      </h4>
+
+      <div class="drop-container medium">
+        <h4>Most important:</h4>
+
+        <div
+          cdkDropList
+          #goalsList="cdkDropList"
+          [cdkDropListData]="goals"
+          [cdkDropListConnectedTo]="[trashList]"
+          class="drop-list mat-elevation-z4"
+          (cdkDropListDropped)="drop($event)">
+          <mat-card class="drop-box mat-elevation-z4" *ngFor="let item of goals; let i = index" cdkDrag>
+            <mat-icon class="description-icon">{{ item.icon }}</mat-icon>
+            <div class="middle">
+              <h4 class="no-margin">{{ item.title }}</h4>
+              <h5 class="no-margin">{{ item.text }}</h5>
+            </div>
+            <div class="end">
+              <button mat-mini-fab (click)="move(i, 1)" color="primary" [disabled]="i === goals.length - 1"><mat-icon>arrow_downward</mat-icon></button>
+              &nbsp;
+              <button mat-mini-fab (click)="move(i, -1)" color="primary" [disabled]="i === 0"><mat-icon>arrow_upward</mat-icon></button>
+              &nbsp;
+              <button mat-mini-fab (click)="remove(i)" color="warn"><mat-icon>delete</mat-icon></button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="drop-container medium">
+        <h4>Removed:</h4>
+
+        <div
+          cdkDropList
+          #trashList="cdkDropList"
+          [cdkDropListData]="trashedGoals"
+          [cdkDropListConnectedTo]="[goalsList]"
+          class="drop-list mat-elevation-z4"
+          (cdkDropListDropped)="drop($event)">
+          <mat-card class="drop-box gray mat-elevation-z4" *ngFor="let item of trashedGoals; let i = index" cdkDrag>
+            <mat-icon class="description-icon gray-icon">{{ item.icon }}</mat-icon>
+            <div class="middle">
+              <h4 class="no-margin">{{ item.title }}</h4>
+              <h5 class="no-margin">{{ item.text }}</h5>
+            </div>
+            <div class="end">
+              <button mat-mini-fab (click)="restore(i)" color="primary"><mat-icon>restore_from_trash</mat-icon></button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="right">
+        <button mat-raised-button (click)="step = 'description'">Back</button> &nbsp;
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel><h5>Assets and liabilities</h5></ng-template>
+
+      <h2>What do you have in assets?</h2>
+      <h4>
+        Please provide the total dollar value of your assets in each category.
+        This information will help us put together your personal financial plan.
+      </h4>
+
+      <div class="money">
+        {{ moneyFormat(totalFinances) }}
+      </div>
+
+      <h2>Home</h2>
+      <h4>If you own your home, what's it's approximate market value?</h4>
+
+      <table #homeTable mat-table *ngIf="finances['home'].length" [dataSource]="finances['home']" class="finance-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('home') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('home', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="financeTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: financeTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('home')">Add home value</button>
+
+      <h2>Retirement</h2>
+      <h4>How much do you currently have in retirement savings?</h4>
+
+      <table #retirementTable mat-table *ngIf="finances['retirement'].length" [dataSource]="finances['retirement']" class="finance-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('retirement') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('retirement', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="financeTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: financeTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('retirement')">Add retirement savings</button>
+
+      <h2>Savings</h2>
+      <h4>How much do you currently have in general savings accounts?</h4>
+
+      <table #savingsTable mat-table *ngIf="finances['savings'].length" [dataSource]="finances['savings']" class="finance-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('savings') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('savings', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="financeTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: financeTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('savings')">Add savings</button>
+
+      <h2>Emergency savings</h2>
+      <h4>How much do you currently have in emergency funds?</h4>
+
+      <table #emergencyTable mat-table *ngIf="finances['emergency'].length" [dataSource]="finances['emergency']" class="finance-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('emergency') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('emergency', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="financeTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: financeTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('emergency')">Add emergency savings</button>
+
+      <h2>Investments</h2>
+      <h4>How much do you currently have invested in stocks, mutual funds of other investments?</h4>
+
+      <table #investmentsTable mat-table *ngIf="finances['investments'].length" [dataSource]="finances['investments']" class="finance-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('investments') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('investments', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="financeTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: financeTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('investments')">Add investments</button>
+
+      <h2>What do you have in liabilities?</h2>
+      <h4>
+        Please provide the total dollar value of your liabilities in each category.
+        This information will help us recommend goals for you.
+      </h4>
+
+      <div class="money">
+        {{ moneyFormat(totalLiability) }}
+      </div>
+
+      <h2>Mortgage</h2>
+      <h4>If you have a mortgage or more than one mortgage, how much do you currently owe?</h4>
+
+      <table #mortgageTable mat-table *ngIf="liabilities['mortgage'].length" [dataSource]="liabilities['mortgage']" class="liability-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('mortgage') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="interest">
+          <th mat-header-cell *matHeaderCellDef> Interest </th>
+          <td mat-cell *matCellDef="let element"> {{ element.interest }} % </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('mortgage', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="liabilityTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: liabilityTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('mortgage')">Add mortgage</button>
+
+      <h2>Credit Card</h2>
+      <h4>
+        If you have credit card debt, how much do you currently owe?
+        Please exclude anything you plan to pay within the next month.
+      </h4>
+
+      <table #creditCardTable mat-table *ngIf="liabilities['creditCard'].length" [dataSource]="liabilities['creditCard']" class="liability-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('creditCard') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="interest">
+          <th mat-header-cell *matHeaderCellDef> Interest </th>
+          <td mat-cell *matCellDef="let element"> {{ element.interest }} % </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('creditCard', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="liabilityTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: liabilityTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('creditCard')">Add Credit Card</button>
+
+      <h2>Line of Credit</h2>
+      <h4>If you have any unsecured line of credit, or more than one, how much do you currently owe?</h4>
+
+      <table #lineOfCreditTable mat-table *ngIf="liabilities['lineOfCredit'].length" [dataSource]="liabilities['lineOfCredit']" class="liability-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('lineOfCredit') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="interest">
+          <th mat-header-cell *matHeaderCellDef> Interest </th>
+          <td mat-cell *matCellDef="let element"> {{ element.interest }} % </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('lineOfCredit', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="liabilityTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: liabilityTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('lineOfCredit')">Add Line of Credit</button>
+
+      <h2>Home equity line of credit</h2>
+      <h4>If you have a home equity line of credit, or more than one, how much do you currently owe?</h4>
+
+      <table #homeEquityLineOfCreditTable mat-table *ngIf="liabilities['homeEquityLineOfCredit'].length" [dataSource]="liabilities['homeEquityLineOfCredit']" class="liability-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('homeEquityLineOfCredit') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="interest">
+          <th mat-header-cell *matHeaderCellDef> Interest </th>
+          <td mat-cell *matCellDef="let element"> {{ element.interest }} % </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('homeEquityLineOfCredit', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="liabilityTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: liabilityTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('homeEquityLineOfCredit')">Add Home Equity Line of Credit</button>
+
+      <h2>Student loans</h2>
+      <h4>If you have a student loan, or more than one, how much do you currently owe?</h4>
+
+      <table #studentLoansTable mat-table *ngIf="liabilities['studentLoans'].length" [dataSource]="liabilities['studentLoans']" class="liability-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('studentLoans') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="interest">
+          <th mat-header-cell *matHeaderCellDef> Interest </th>
+          <td mat-cell *matCellDef="let element"> {{ element.interest }} % </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('studentLoans', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="liabilityTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: liabilityTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('studentLoans')">Add Student Loan</button>
+
+      <h2>Other Loans</h2>
+      <h4>How much do you currently have in other forms of debt?</h4>
+
+      <table #otherTable mat-table *ngIf="liabilities['other'].length" [dataSource]="liabilities['other']" class="liability-table mat-elevation-z4">
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> {{ tableHeaders('other') }} </th>
+          <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{ moneyFormat(element.amount) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="interest">
+          <th mat-header-cell *matHeaderCellDef> Interest </th>
+          <td mat-cell *matCellDef="let element"> {{ element.interest }} % </td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-raised-button (click)="edit('other', i)">edit</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="liabilityTableCols"></tr>
+        <tr mat-row *matRowDef="let row; columns: liabilityTableCols;"></tr>
+      </table>
+
+      <button mat-raised-button color="primary" (click)="add('other')">Add Other Debt</button>
+
+      <div class="right">
+        <button mat-raised-button matStepperPrevious>Back</button> &nbsp;
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel><h5>Budget</h5></ng-template>
+
+      <h2>Let's put together your budget</h2>
+
+      <h4>
+        Please provide your average monthly income, expenses and savings below.
+        This information will help us calculate your monthly cash flow, which will
+        help us identify which goals to recommend for you.
+      </h4>
+
+      <div class="money" [ngClass]="{
+        money: totalMonthlyCash >= 0, negMoney: totalMonthlyCash < 0
+      }">
+        {{ moneyFormat(totalMonthlyCash) }}
+      </div>
+
+      <h2>What's your average monthly net income?</h2>
+      <h4 class="half l">
+        Average monthly income (i.e. salary/wages/earnings), after taxes
+      </h4>
+      <mat-form-field class="half" appearance="outline">
+        <mat-label>Monthly Income</mat-label>
+        <input matNativeControl type="number" [(ngModel)]="monthlyIncome">
+        <mat-icon matPrefix>attach_money</mat-icon>
+        <mat-hint>
+          Based on the information you gave us when you setup Left to Spend, your
+          average monthly net income is {{ moneyFormat(monthlyIncome) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <h4 class="half l">
+        Additional average monthly income (e.g. rental income, benefits, child support)
+      </h4>
+      <mat-form-field class="half" appearance="outline">
+        <mat-label>Additional Income</mat-label>
+        <input matNativeControl type="number" [(ngModel)]="additionalIncome">
+        <mat-icon matPrefix>attach_money</mat-icon>
+      </mat-form-field>
+
+      <h2>Average monthly expenses</h2>
+      <h4 class="half l">
+        Roughly how much do you spend in an average monthly expenses? (i.e. household
+        expenses, utilities, bills, rent, mortgage payment)
+      </h4>
+      <mat-form-field class="half" appearance="outline">
+        <mat-label>Monthly Expenses</mat-label>
+        <input matNativeControl type="number" [(ngModel)]="monthlyExpenses">
+        <mat-icon matPrefix>attach_money</mat-icon>
+        <mat-hint>
+          Based on the information you gave us when you setup Left to Spend, your
+          average monthly expenses are {{ moneyFormat(monthlyExpenses) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <h2>Monthly savings</h2>
+      <h4 class="half l">
+        Roughly how much do you save each month?
+      </h4>
+      <mat-form-field class="half" appearance="outline">
+        <mat-label>Monthly Savings</mat-label>
+        <input matNativeControl type="number" [(ngModel)]="monthlySavings">
+        <mat-icon matPrefix>attach_money</mat-icon>
+        <mat-hint>
+          Based on the information you gave us when you setup Left to Spend, your
+          average monthly savings are {{ moneyFormat(monthlySavings) }}
+        </mat-hint>
+      </mat-form-field>
+
+      <div class="right">
+        <button mat-raised-button matStepperPrevious>Back</button> &nbsp;
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel><h5>Retirement info</h5></ng-template>
+
+      <h2>Let's figure out how much you need to save for retirement</h2>
+      <h4>Using the information you provide below, we'll calculate how much money you need for retirement.</h4>
+
+      <h4>Are you currently retired?</h4>
+      <mat-radio-group [(ngModel)]="retired">
+        <mat-radio-button [value]="true">Yes</mat-radio-button>&nbsp;
+        <mat-radio-button [value]="false">No</mat-radio-button>
+      </mat-radio-group>
+
+      <div *ngIf="!retired">
+
+        <h4 class="half l">Planned retirement age</h4>
+        <mat-form-field class="half" appearance="outline">
+          <mat-label>retirement age</mat-label>
+          <input matNativeControl type="number" [(ngModel)]="retirementAge">
+        </mat-form-field>
+
+        <h4 class="half l">Number of years you'd like this money to last during retirement</h4>
+        <mat-form-field class="half" appearance="outline">
+          <mat-label>years</mat-label>
+          <input matNativeControl type="number" [(ngModel)]="retirementDuration">
+        </mat-form-field>
+
+        <h4 class="half l">
+          Rate of return
+        </h4>
+        <mat-form-field class="half" appearance="outline">
+          <mat-label>rate of return</mat-label>
+          <input matNativeControl type="number" [(ngModel)]="retirementRateOfReturn">
+          <h3 matSuffix>%</h3>
+          <mat-hint>
+            Please note: The rate of return is hypothetical and does not reflect actual
+            results or the future returns or future value of any mutual funds, investments
+            of savings. Assumes reinvestment of all income and no transaction costs of taxes.
+          </mat-hint>
+        </mat-form-field>
+
+        <br><br><br>
+
+        <h4 class="half l">Other Retirement Income (e.g. Old Age Security, Canada Pension Plan)</h4>
+        <mat-form-field class="half" appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input #qwerty type="number" matNativeControl [(ngModel)]="otherRetirementIncome">
+          <mat-icon matPrefix>attach_money</mat-icon>
+          <mat-hint>
+            Note: {{ moneyFormat(qwerty.value) }} is approximately the average sum and maximum CVA5 for 2021.
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="right">
+        <button mat-raised-button matStepperPrevious>Back</button> &nbsp;
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel><h5>Review and confirm</h5></ng-template>
+
+      <h2>Review and confirm</h2>
+      <h4>Please review and confirm the information below.</h4>
+
+      <h2>Personal information</h2>
+      <div class="flex-area">
+        <mat-card class="confirm-card-one mat-elevation-z4">
+          <h4 class="no-margin">Marital status</h4>
+          <h2 class="colored no-margin">{{ maritalStatus || 'No answer given' }}</h2>
+        </mat-card>
+
+        <mat-card class="confirm-card-one mat-elevation-z4">
+          <h4 class="no-margin">Children whose education you're saving for.</h4>
+          <h2 class="colored no-margin">{{ childEducation ? numberOfChildren : 'None' }}</h2>
+        </mat-card>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="stepper.selectedIndex = 0">edit</button>
+
+      <h2>Goals</h2>
+      <div class="flex-area">
+        <mat-card class="confirm-card-two mat-elevation-z4" *ngFor="let item of goals; let i = index">
+          <h2 class="circle no-margin">&nbsp;{{ i + 1 }}&nbsp;</h2>
+          &nbsp;&nbsp;
+          <mat-icon class="colored">{{ item.icon }}</mat-icon>
+          &nbsp;&nbsp;
+          <h4 class="no-margin">{{ item.title }}</h4>
+        </mat-card>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="stepper.selectedIndex = 0">edit</button>
+
+      <h2>Assets</h2>
+      <mat-card class="confirm-card-three mat-elevation-z4">
+        <h4 class="no-margin">Total assets</h4>
+        <h2 class="colored no-margin">{{ moneyFormat(totalFinances) }}</h2>
+      </mat-card>
+      <div class="flex-area">
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Home value</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(finances.home)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Retirement savings</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(finances.retirement)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Savings</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(finances.savings)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Emergency savings</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(finances.emergency)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Investments</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(finances.investments)) }}</h4>
+        </mat-card>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="stepper.selectedIndex = 1">edit</button>
+
+      <h2>Liabilities</h2>
+      <mat-card class="confirm-card-three mat-elevation-z4">
+        <h4 class="no-margin">Total liabilities</h4>
+        <h2 class="colored no-margin">{{ moneyFormat(totalLiability) }}</h2>
+      </mat-card>
+      <div class="flex-area">
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Mortgage</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(liabilities.mortgage)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Credit card debt</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(liabilities.creditCard)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Line of credit</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(liabilities.lineOfCredit)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Home equity line of credit</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(liabilities.homeEquityLineOfCredit)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Student loans</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(liabilities.studentLoans)) }}</h4>
+        </mat-card>
+
+        <mat-card class="confirm-card-two mat-elevation-z4">
+          <h4 class="short no-margin">Other debt</h4>
+          <h4 class="colored no-margin">{{ moneyFormat(reduceAmounts(liabilities.other)) }}</h4>
+        </mat-card>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="stepper.selectedIndex = 1">edit</button>
+
+      <h2>Budget</h2>
+      <div class="flex-area">
+        <mat-card class="confirm-card-four mat-elevation-z4">
+          <h4 class="no-margin">Average monthly income</h4>
+          <h2 class="colored no-margin">{{ moneyFormat(monthlyIncome) }}</h2>
+        </mat-card>
+
+        <mat-card class="confirm-card-four mat-elevation-z4">
+          <h4 class="no-margin">Average monthly expenses</h4>
+          <h2 class="colored no-margin">{{ moneyFormat(monthlyExpenses) }}</h2>
+        </mat-card>
+
+        <mat-card class="confirm-card-four mat-elevation-z4">
+          <h4 class="no-margin">Average monthly cash on hand</h4>
+          <h2 class="colored no-margin">{{ moneyFormat(monthlyIncome - monthlyExpenses) }}</h2>
+        </mat-card>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="stepper.selectedIndex = 2">edit</button>
+
+      <h2>Retirement</h2>
+      <mat-card class="confirm-card-three mat-elevation-z4">
+        <h4 class="no-margin">Are you currently retired?</h4>
+        <h2 class="colored no-margin">{{ retired ? 'Yes' : 'No' }}</h2>
+      </mat-card>
+      <div class="flex-area" *ngIf="!retired">
+        <mat-card class="confirm-card-one mat-elevation-z4">
+          <h4 class="no-margin">Planned retirement age</h4>
+          <h2 class="colored no-margin">{{ retirementAge }}</h2>
+        </mat-card>
+
+        <mat-card class="confirm-card-one mat-elevation-z4">
+          <h4 class="no-margin">Years for retirement to last</h4>
+          <h2 class="colored no-margin">{{ retirementDuration }}</h2>
+        </mat-card>
+
+        <mat-card class="confirm-card-one mat-elevation-z4">
+          <h4 class="no-margin">Rate of return</h4>
+          <h2 class="colored no-margin">{{ retirementDuration }}%</h2>
+        </mat-card>
+
+        <mat-card class="confirm-card-one mat-elevation-z4">
+          <h4 class="no-margin">Other retirement income</h4>
+          <h2 class="colored no-margin">{{ moneyFormat(otherRetirementIncome) }}</h2>
+        </mat-card>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="stepper.selectedIndex = 3">edit</button>
+
+      <p class="medium">
+        <b>Please note:</b> Our recommendations are based on the information you've
+        provided in your Financial Profile. This information is intended as guidance
+        only and should not be considered financial advice or as a formal financial plan.
+      </p>
+
+      <div class="right">
+        <button mat-raised-button matStepperPrevious>Back</button> &nbsp;
+        <button mat-raised-button color="primary" (click)="step = 'finished'">Submit</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
+<div *ngIf="step === 'finished'">
+
+  <h2>Goals we recommend</h2>
+
+  <mat-card class="goal-card mat-elevation-z4" *ngFor="let goal of goals; let i = index;">
+
+    <div class="goal-number">
+      <h2 class="circle no-margin">&nbsp;{{ i + 1 }}&nbsp;</h2>
+    </div>
+
+    <div class="goal-body">
+      <h4 class="no-margin" style="display: flex; align-items: center">
+        <mat-icon *ngIf="!goal.finished()" class="colored">{{ goal.icon }}</mat-icon>
+        <mat-icon *ngIf="goal.finished()" class="green ">check_circle</mat-icon>
+        <span>&nbsp;{{ goal.title }} goal</span>
+      </h4>
+      <h2>{{ goal.finishedHeader }}</h2>
+      <h4>{{ goal.finishedText }}</h4>
+
+      <h2 *ngIf="goal.finished()" class="green">Achieved</h2>
+    </div>
+
+    <div class="goal-button">
+      <button mat-raised-button color="primary" [disabled]="goal.finished()">Start Goal</button>
+    </div>
+
+  </mat-card>
+
+  <p>
+    <b>Please note:</b> Our recommendations are based on the information you've
+    provided in your Financial Profile. This information is intended as guidance
+    only and should not be considered financial advice or as a formal financial plan.
+    The amounts indicated above are for illustrative purposes only and may change as
+    a result of information provided when setting up a Goal.
+  </p>
+</div>

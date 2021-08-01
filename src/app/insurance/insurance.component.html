@@ -1,23 +1,23 @@
 <br><br>
 <div *ngIf="!started">
   <br><br>
-  <h3 class="blue">
+  <h2 class="blue">
     You could save 30% on Car Insurance when you're claims free.
-  </h3>
+  </h2>
   <br><br>
-  <p class="right">
+  <h4 class="right">
     <button mat-raised-button color="primary" (click)="started = true">Get a Quote</button>
     <br>
     Get a quote online and save 5% on eligible coverage*
-  </p>
+  </h4>
 </div>
 
 
 <mat-vertical-stepper *ngIf="started && !submitted">
   <mat-step>
-    <ng-template matStepLabel>Vehicle Details</ng-template>
+    <ng-template matStepLabel><h2>Vehicle Details</h2></ng-template>
 
-    <p>Fill in your vehicle details beginning with year, below.</p>
+    <h4>Fill in your vehicle details beginning with year, below.</h4>
     <p>
       <mat-form-field appearance="outline">
         <mat-label>Vehicle Year</mat-label>
@@ -59,7 +59,7 @@
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Finance Details</ng-template>
+    <ng-template matStepLabel><h2>Finance Details</h2></ng-template>
 
     <p>
       <mat-button-toggle-group [(value)]="finance">
@@ -85,28 +85,28 @@
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Driving Distance</ng-template>
+    <ng-template matStepLabel><h2>Driving Distance</h2></ng-template>
 
-    <p>
+    <h4>
      For this vehicle, what is the estimated total annual driving distance (km)?
-    </p>
+    </h4>
 
     <mat-form-field appearance="outline">
       <mat-label>Select driving distance</mat-label>
       <input matNativeControl type="number" [(ngModel)]="distance">
     </mat-form-field>
 
-    <p>
+    <h4>
       If applicable, select the options that contribute to your annual driving distance:
-    </p>
+    </h4>
 
-    <p>
+    <h4>
       <mat-checkbox color="primary" [(ngModel)]="workSchool"> I commute to work or school</mat-checkbox>
-    </p>
+    </h4>
 
-    <p>
+    <h4>
       <mat-checkbox color="primary" [(ngModel)]="business"> I use my car to conduct business</mat-checkbox>
-    </p>
+    </h4>
 
     <div class="right">
       <button
@@ -124,11 +124,11 @@
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Coverage Start Date</ng-template>
+    <ng-template matStepLabel><h2>Coverage Start Date</h2></ng-template>
 
-    <p>
+    <h4>
       When do you want your coverage to start?
-    </p>
+    </h4>
 
     <mat-form-field appearance="outline">
       <mat-label>Choose a date</mat-label>
@@ -153,21 +153,21 @@
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Savings and Discounts</ng-template>
+    <ng-template matStepLabel><h2>Savings and Discounts</h2></ng-template>
 
-    <p>
+    <h4>
       Do you equip this vehicle with 4 winter tires from December 1st to Marth 31st every year?
-    </p>
+    </h4>
 
     <mat-button-toggle-group [(value)]="winterTires">
       <mat-button-toggle value="yes">Yes</mat-button-toggle>
       <mat-button-toggle value="no">No</mat-button-toggle>
     </mat-button-toggle-group>
 
-    <p>
+    <h4>
       Would you like to enroll in the TD MyAdvantage savings program?
       You could sav up to 25% for driving safely.
-    </p>
+    </h4>
 
     <mat-button-toggle-group [(value)]="savingsProgram">
       <mat-button-toggle value="yes">Yes</mat-button-toggle>
@@ -190,21 +190,21 @@
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>The Driver</ng-template>
+    <ng-template matStepLabel><h2>The Driver</h2></ng-template>
 
-    <p>
+    <h4>
       Enter your license number and we'll fill in some off the required information.
-    </p>
+    </h4>
 
     <mat-form-field style="width: 100%" appearance="outline">
       <mat-label>Drivers License Number</mat-label>
       <input matNativeControl [(ngModel)]="licNumber" placeholder="ANNNN-NNNNNN-NNNNN">
     </mat-form-field>
 
-    <p>
+    <h4>
       Entering your license number lets us deliver you a faster more accurate quote.
       Rest assured your personal information is secure with us.
-    </p>
+    </h4>
 
     <div class="right">
       <button
@@ -222,11 +222,11 @@
   </mat-step>
 
   <mat-step>
-    <ng-template matStepLabel>Driver's License History</ng-template>
+    <ng-template matStepLabel><h2>Driver's License History</h2></ng-template>
 
-    <p>
+    <h4>
       Have you ever had a driver's license from another Canadian province, or the USA?
-    </p>
+    </h4>
 
     <mat-button-toggle-group [(value)]="otherLic">
       <mat-button-toggle value="yes">Yes</mat-button-toggle>
@@ -251,18 +251,18 @@
 
 <div *ngIf="submitted">
   <br><br>
-  <h3>Reviewer, here's a detailed summary of your quote:</h3>
+  <h2>Reviewer, here's a detailed summary of your quote:</h2>
 
   <h1><span class="biggest">${{insuranceCost}}</span> per month</h1>
 
-  <p>${{insuranceCostX12}} per year | Taxes not included | Quote #D000034953075</p>
-  <p>You saved money on your premium.</p>
+  <h4>${{insuranceCostX12}} per year | Taxes not included | Quote #D000034953075</h4>
+  <h4>You saved money on your premium.</h4>
   <br>
 
   <div class="right">
     <button mat-raised-button color="warn">Let us call you</button>
-    <p>
+    <h4>
       Or call us at 1-877-<b>123-123</b>
-    </p>
+    </h4>
   </div>
 </div>
