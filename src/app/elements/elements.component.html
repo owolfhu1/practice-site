@@ -21,11 +21,11 @@
   <div class="header">
     <h1><span class="link" (click)="selected = null">Elements Home</span> > {{ selected }}</h1>
     <h3 class="paginator">
-      <span *ngIf="previous" class="link" [matTooltip]="previous" (click)="selected = previous"><mat-icon class="pag">arrow_left</mat-icon> previous</span>
-      <span *ngIf="!previous" class="gray"><mat-icon class="pag">arrow_left</mat-icon> previous</span>
+      <span *ngIf="previous" class="link" [matTooltip]="previous" id="prev-element" (click)="selected = previous"><mat-icon class="pag">arrow_left</mat-icon> previous</span>
+      <span *ngIf="!previous" class="gray" id="prev-element-dis"><mat-icon class="pag">arrow_left</mat-icon> previous</span>
       |
-      <span *ngIf="next" class="link" [matTooltip]="next" (click)="selected = next">next <mat-icon class="pag">arrow_right</mat-icon></span>
-      <span *ngIf="!next" class="gray">next <mat-icon class="pag">arrow_right</mat-icon></span>
+      <span *ngIf="next" class="link" [matTooltip]="next" id="next-element"  (click)="selected = next">next <mat-icon class="pag">arrow_right</mat-icon></span>
+      <span *ngIf="!next" class="gray" id="next-element-dis" >next <mat-icon class="pag">arrow_right</mat-icon></span>
     </h3>
 
   </div>
