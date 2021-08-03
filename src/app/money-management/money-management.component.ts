@@ -298,7 +298,7 @@ export class DialogData {
   template: `
     <div style="display: flex; justify-content: space-between; align-items: center">
       <h1 class="title">{{ data.title }}</h1>
-      <button mat-icon-button (click)="dialogRef.close()"><mat-icon>close</mat-icon></button>
+      <button id="xit" mat-icon-button (click)="dialogRef.close()"><mat-icon>close</mat-icon></button>
     </div>
     <hr>
     <h4 *ngIf="data.liability">Please provide the dollar amount you owe.</h4>
@@ -324,8 +324,8 @@ export class DialogData {
     </mat-form-field>
 <br>
     <div class="actions">
-      <button mat-raised-button color="warn" (click)="dialogRef.close()">Cancel</button> &nbsp;
-      <button mat-raised-button color="primary" (click)="dialogRef.close({
+      <button id="cancel-popup" mat-raised-button color="warn" (click)="dialogRef.close()">Cancel</button> &nbsp;
+      <button id="add-btn" mat-raised-button color="primary" (click)="dialogRef.close({
         amount: amount.value,
         custom: custom.value,
         interest: interest

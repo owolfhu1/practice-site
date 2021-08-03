@@ -4,6 +4,7 @@
 
 <div class="list">
   <mat-card
+    [id]="'selenium-' + item.name"
     matRipple
     class="mat-elevation-z12"
     *ngFor="let item of seleniumItems"
@@ -20,6 +21,7 @@
 
 <div class="list">
   <mat-card
+    [id]="'project-' + item.name"
     matRipple
     class="mat-elevation-z12"
     *ngFor="let item of projectItems"
@@ -41,7 +43,7 @@
     be taken once per class.<br>
     For more information get in touch.
   </p>
-  <button mat-raised-button color="primary" [routerLink]="['/under-construction/application']">
+  <button id="apply-now" mat-raised-button color="primary" [routerLink]="['/under-construction/application']">
     APPLY NOW
   </button>
 </div>

@@ -50,6 +50,7 @@
 
     <div class="right">
       <button
+        id="next-step"
         mat-raised-button
         color="primary"
         [disabled]="!model"
@@ -71,11 +72,13 @@
 
     <div class="right">
       <button
+        id="last-step"
         mat-stroked-button
         matStepperPrevious
       >Back</button>
       &nbsp;
       <button
+        id="next-step2"
         mat-raised-button
         color="primary"
         [disabled]="!finance"
@@ -110,11 +113,13 @@
 
     <div class="right">
       <button
+        id="last-step2"
         mat-stroked-button
         matStepperPrevious
       >Back</button>
       &nbsp;
       <button
+        id="next-step3"
         mat-raised-button
         color="primary"
         [disabled]="!distance && distance !== 0"
@@ -139,11 +144,13 @@
 
     <div class="right">
       <button
+        id="last-step3"
         mat-stroked-button
         matStepperPrevious
       >Back</button>
       &nbsp;
       <button
+        id="next-step4"
         mat-raised-button
         color="primary"
         [disabled]="!date"
@@ -176,11 +183,13 @@
 
     <div class="right">
       <button
+        id="last-step4"
         mat-stroked-button
         matStepperPrevious
       >Back</button>
       &nbsp;
       <button
+        id="next-step5"
         mat-raised-button
         color="primary"
         [disabled]="!(!!savingsProgram && !!winterTires)"
@@ -208,11 +217,13 @@
 
     <div class="right">
       <button
+        id="last-step5"
         mat-stroked-button
         matStepperPrevious
       >Back</button>
       &nbsp;
       <button
+        id="next-step6"
         mat-raised-button
         color="primary"
         [disabled]="!licNumber"
@@ -235,11 +246,13 @@
 
     <div class="right">
       <button
+        id="last-step6"
         mat-stroked-button
         matStepperPrevious
       >Back</button>
       &nbsp;
       <button
+        id="next-step7"
         mat-raised-button
         color="primary"
         [disabled]="!otherLic"
@@ -260,7 +273,7 @@
   <br>
 
   <div class="right">
-    <button mat-raised-button color="warn">Let us call you</button>
+    <button id="let-us-call-you" mat-raised-button color="warn">Let us call you</button>
     <h4>
       Or call us at 1-877-<b>123-123</b>
     </h4>

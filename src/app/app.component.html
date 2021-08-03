@@ -1,35 +1,37 @@
 <mat-toolbar color="primary" class="tool-bar">
   <mat-icon class="logo">local_fire_department</mat-icon>
   <div>
-    <button [routerLink]="['/home']" mat-button> HOME </button>
+    <button id="home-btn" [routerLink]="['/home']" mat-button> HOME </button>
     <button
+      id="selenium-menu-btn"
       mat-button
       #sTrigger="matMenuTrigger"
       [matMenuTriggerFor]="seleniumMenu">
       SELENIUM <mat-icon>{{sTrigger.menuOpen ? 'expand_less' : 'expand_more'}}</mat-icon>
     </button>
     <mat-menu #seleniumMenu="matMenu">
-      <button mat-menu-item [routerLink]="['/selenium/elements']">
+      <button id="elements-menu" mat-menu-item [routerLink]="['/selenium/elements']">
         <mat-icon>dashboard</mat-icon>Elements
       </button>
-      <button mat-menu-item [routerLink]="['/under-construction/testNG']">
+      <button id="test-ng" mat-menu-item [routerLink]="['/under-construction/testNG']">
         <mat-icon>task_alt</mat-icon>TestNG
       </button>
-      <button mat-menu-item [routerLink]="['/under-construction/cucumber']">
+      <button id="cucumber" mat-menu-item [routerLink]="['/under-construction/cucumber']">
         <mat-icon>miscellaneous_services
         </mat-icon>Cucumber</button>
     </mat-menu>
     <button
+      id="projects-menu-btn"
       mat-button
       #pTrigger="matMenuTrigger"
       [matMenuTriggerFor]="projectsMenu">
       PROJECTS <mat-icon>{{pTrigger.menuOpen ? 'expand_less' : 'expand_more'}}</mat-icon>
     </button>
     <mat-menu #projectsMenu="matMenu">
-      <button mat-menu-item [routerLink]="['/projects/insurance']">
+      <button id="insurance" mat-menu-item [routerLink]="['/projects/insurance']">
         <mat-icon>local_police</mat-icon>Insurance
       </button>
-      <button mat-menu-item [routerLink]="['/projects/money-management']">
+      <button id="money-management" mat-menu-item [routerLink]="['/projects/money-management']">
         <mat-icon>account_balance</mat-icon>Money Management
       </button>
     </mat-menu>

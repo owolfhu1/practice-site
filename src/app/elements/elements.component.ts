@@ -165,9 +165,10 @@ export class ElementsComponent {
     </mat-form-field>
 
     <div style="display: flex; flex-direction: row-reverse">
-      <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
+      <button id="cancel-popup" mat-raised-button (click)="dialogRef.close()">Cancel</button>
       &nbsp;
       <button
+        id="create"
         mat-raised-button
         color="primary"
         [disabled]="!pass.value || !name.value || !email.value"
